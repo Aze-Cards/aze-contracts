@@ -1,0 +1,56 @@
+use.miden::kernels::tx::account
+
+# currently considering we have only four cards 
+proc.store_cards.4
+    loc_store.0 
+    loc_store.1 
+    loc_store.2
+    loc_store.3
+end
+
+# loading four cards
+proc.load_cards.4
+    loc_load.0
+    loc_load.1
+    loc_load.2
+    loc_load.3
+end 
+
+# currently we are distributing cards to four players 
+proc.store_players.8
+    loc_store.4 
+    loc_store.5 
+    loc_store.6
+    loc_store.7
+end
+
+# loading players id
+proc.load_players.8
+   loc_load.4
+   loc_load.5
+   loc_load.6
+   loc_load.7
+end
+
+begin
+    # for now denoting using four player ids 0xe700000000000000, 0xe700000000a000001, 0xe700000000000002, 0xe700000000000003
+    push.0xe700000000000000.0xe700000000000001.0xe700000000000002.0xe700000000000003
+    exec.store_players
+
+    # need to send note with their card info to all the players 
+    # for now considering there are only four players 
+    push.1.2.3.4
+    exec.store_cards
+
+    # loading player ids back in stack to start sending notes 
+    exec.load_players
+
+    # loading cards back in stack 
+    exec.load_cards
+
+    # iterate and send the card notes to all the players
+    repeat.4
+        # send note here 
+    end
+
+end
