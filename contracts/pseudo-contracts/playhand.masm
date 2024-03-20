@@ -1,0 +1,26 @@
+# play hand function should update the game state based on the player move
+
+const.CALL=100
+const.RAISE=200
+const.FOLD=300
+const.CHECK=400
+
+# [player, action_type, amount (in case of raise), next_turn]
+proc.store_player_action.1
+   mem_storew.0
+end
+
+proc.load_player_action.1
+    mem_loadw.0
+end
+
+begin
+    # for now pushing player info and action info
+    #    player             action amount next turn
+    push.0xa700000000000009.RAISE.50.1
+    # push.FOLD
+    # push.CHECK
+    # push.RAISE  
+    exec.store_player_action
+
+end 

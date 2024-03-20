@@ -1,0 +1,99 @@
+# winning hands
+const.ROYAL_FLUSH=100
+const.STRAIGHT_FLUSH=200
+const.FOUR_OF_A_KIND=300
+const.FULL_HOUSE=400
+const.FLUSH=500
+const.STRAIGHT=600
+const.THREE_OF_A_KIND=700
+const.TWO_PAIR=800
+const.ONE_PAIR=900
+const.HIGH_CARD=1000
+
+# currently we are distributing cards to four players 
+proc.store_players.1
+    mem_storew.0
+end
+
+# loading players id
+proc.load_players.1
+   mem_loadw.0
+end
+
+proc.store_player_hands.2
+    mem_storew.1
+end
+
+proc.load_player_hands.2
+    mem_loadw.1
+end
+
+proc.player_1_score.5
+   loc_store.4
+end
+
+proc.load_player_1_score.5
+   loc_load.4
+end
+
+proc.player_2_score.6
+   loc_store.5
+end
+
+proc.load_player_2_score.6
+   loc_load.5
+end
+
+proc.player_3_score.7
+   loc_store.6
+end
+
+proc.load_player_3_score.7
+   loc_load.6
+end
+
+proc.player_4_score.8
+   loc_store.7
+end
+
+proc.load_player_4_score.8
+   loc_load.7
+end
+
+begin
+    # total players
+    push.0xa700000000000009.0xb700000000000009.0xc700000000000009.0xd700000000000009
+    exec.store_players
+
+    # player hand
+    #    1000       600      800      300
+    push.HIGH_CARD.STRAIGHT.TWO_PAIR.FOUR_OF_A_KIND
+    exec.store_player_hands
+
+    # loading player hands
+    exec.load_player_hands
+
+    # doubling the 1 score
+    push.2 mul
+    exec.player_1_score
+
+    # doubling player 2 score 
+    push.2 mul
+    exec.player_2_score
+    
+
+    # doubling the player 3 score 
+    push.2 mul
+    exec.player_3_score
+
+    # doubling the player 4 score
+    push.2 mul
+    exec.player_4_score
+
+    # loading scores
+    exec.load_player_1_score
+    exec.load_player_2_score
+    exec.load_player_3_score
+    exec.load_player_4_score
+
+end
